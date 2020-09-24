@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+                  xmlns:tns="http://www.masnegocio.com/FacEWS/" 
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                  name="FacEWS" 
+                  targetNamespace="http://www.masnegocio.com/FacEWS/">
+                  	
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.masnegocio.com/FacEWS/" xmlns:datos="http://www.masnegocio.com/FacEWS">
+            <xsd:import schemaLocation="FacEWS.xsd" namespace="http://www.masnegocio.com/FacEWS"></xsd:import>
+    	
+      		<xsd:element name="EmitirCFDIRequest">
+        		<xsd:complexType>
+          			<xsd:sequence>
+          			    <xsd:element name="usuario"          type="xsd:string"/>
+          			    <xsd:element name="password"         type="xsd:string"/>
+          				<xsd:element name="numeroReferenciaFacturacion" type="xsd:string"/>
+          				<xsd:element name="regresaXML"       type="xsd:short"/> <!-- S o N, por default sera S -->
+          				<xsd:element name="regresaPDF"       type="xsd:short"/> <!-- S o N, por default sera N -->
+            			<xsd:element name="ticketTienda"     type="xsd:string"/>
+          			</xsd:sequence>          			
+        		</xsd:complexType>
+      		</xsd:element>
+      		
+      		<xsd:element name="EmitirCFDIResponse">
+        		<xsd:complexType>
+          			<xsd:sequence>
+            			<xsd:element name="respuesta" type="datos:Respuesta"/>
+          			</xsd:sequence>
+        		</xsd:complexType>
+      		</xsd:element>
+      		
+      		<xsd:element name="ConsultarCFDIRequest">
+        		<xsd:complexType>
+          			<xsd:sequence>
+          				<!-- DEBE EXISTIR AL MENOS UNO DE ESTOS ELEMENTOS PARA PODER CONSULTAR -->
+          				<xsd:element name="empresa"                     type="xsd:string" />
+                  <xsd:element name="centroCostos"                type="xsd:string" nillable="true" minOccurs="0" />
+          				<xsd:element name="usuario"                     type="xsd:string" />
+          				<xsd:element name="password"                    type="xsd:string" />
+          				<xsd:element name="numeroReferenciaFacturacion" type="xsd:string" nillable="true" minOccurs="0" />
+          				<xsd:element name="uuid"                        type="xsd:string" nillable="true" minOccurs="0" />
+          				<xsd:element name="estatusDocumento"            type="xsd:string" nillable="true" minOccurs="0" />
+          				<xsd:element name="tipoDocumento"               type="xsd:string" nillable="true" minOccurs="0" />
+          				<xsd:element name="regresaXML"                  type="xsd:short" /><!-- 1 o 0 -->
+          				<xsd:element name="regresaPDF"                  type="xsd:short" /><!-- 1 o 0 -->
+          				<!-- Si no se agrega numero de referencia o uuid, se solicitan estos datos -->
+          				<xsd:element name="fechaInicial"                type="xsd:string" nillable="true" minOccurs="0" /><!-- YYYYMMDD -->
+          				<xsd:element name="fechaFinal"                  type="xsd:string" nillable="true" minOccurs="0" /><!-- YYYYMMDD -->
+          				<xsd:element name="traerCamposDetalle"          type="xsd:short" /><!-- 0 o 1 -->
+          			</xsd:sequence>
+        		</xsd:complexType>
+      		</xsd:element>
+      		
+      		<xsd:element name="ConsultarCFDIResponse">
+        		<xsd:complexType>
+          			<xsd:sequence>
+            			<xsd:element name="estatus"        type="xsd:short"/> <!-- 1=ok 0=error -->
+						<xsd:element name="descripcion"    type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+						<xsd:element name="totalFacturas"  type="xsd:integer"/>
+						<xsd:element name="numeroPeticion" nillable="true" type="xsd:string" minOccurs="0"/>
+            			<xsd:element name="Facturacion"    type="datos:ArrayOfFactura" nillable="true" minOccurs="0" />
+          			</xsd:sequence>
+        		</xsd:complexType>
+      		</xsd:element>
+      		
+      		
+      		<xsd:element name="CancelarCFDIRequest">
+        		<xsd:complexType>
+          			<xsd:sequence>
+			      		<!-- DEBE EXISTIR AL MENOS UNO DE ESTOS ELEMENTOS PARA PODER CANCELAR -->
+			      		<xsd:element name="usuario"          type="xsd:string"/>
+          				<xsd:element name="password"         type="xsd:string"/>
+          				<xsd:element name="uuid"             type="xsd:string"/>
+          				<xsd:element name="numeroReferenciaFacturacion" nillable="true" type="xsd:string" minOccurs="0"/>
+          			</xsd:sequence>
+        		</xsd:complexType>
+      		</xsd:element>
+      		
+      		<xsd:element name="CancelarCFDIResponse">
+        		<xsd:complexType>
+          			<xsd:sequence>
+            			<xsd:element name="respuesta" type="datos:RespuestaCancelacion"/>
+          			</xsd:sequence>
+        		</xsd:complexType>
+      		</xsd:element>
+    
+    </xsd:schema>
+  </wsdl:types>
+  
+  <wsdl:message name="EmitirCFDIRequest">
+    <wsdl:part element="tns:EmitirCFDIRequest" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="EmitirCFDIResponse">
+    <wsdl:part element="tns:EmitirCFDIResponse" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="ConsultarCFDIRequest">
+    <wsdl:part element="tns:ConsultarCFDIRequest" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="ConsultarCFDIResponse">
+    <wsdl:part element="tns:ConsultarCFDIResponse" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="CancelarCFDIRequest">
+    <wsdl:part element="tns:CancelarCFDIRequest" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="CancelarCFDIResponse">
+    <wsdl:part element="tns:CancelarCFDIResponse" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="FacEWS">
+    <wsdl:operation name="EmitirCFDI">
+      <wsdl:input message="tns:EmitirCFDIRequest"/>
+      <wsdl:output message="tns:EmitirCFDIResponse"/>
+    </wsdl:operation>
+    
+    <wsdl:operation name="ConsultarCFDI">
+      <wsdl:input message="tns:ConsultarCFDIRequest"/>
+      <wsdl:output message="tns:ConsultarCFDIResponse"/>
+    </wsdl:operation>
+    
+    <wsdl:operation name="CancelarCFDI">
+      <wsdl:input message="tns:CancelarCFDIRequest"/>
+      <wsdl:output message="tns:CancelarCFDIResponse"/>
+    </wsdl:operation>
+    
+  </wsdl:portType>
+  
+  <wsdl:binding name="FacEWS" type="tns:FacEWS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="EmitirCFDI">
+      <soap:operation soapAction="http://www.masnegocio.com/FacEWS/EmitirCFDI"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="ConsultarCFDI">
+      <soap:operation soapAction="http://www.masnegocio.com/FacEWS/ConsultarCFDI"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="CancelarCFDI">
+      <soap:operation soapAction="http://www.masnegocio.com/FacEWS/CancelarCFDI"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+  </wsdl:binding>
+  
+  <wsdl:service name="FacEWS">
+    <wsdl:port binding="tns:FacEWS" name="FacEWS">
+      <soap:address location="http://172.20.53.113/marti/face/marti/com/proceso/_factura/servicioFactura.php?wsdl"/>
+    </wsdl:port>
+  </wsdl:service>
+  
+</wsdl:definitions>

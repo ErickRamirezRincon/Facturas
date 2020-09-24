@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:tns="http://www.masnegocio.com/FacEWS"
+		    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.masnegocio.com/FacEWS" >
+        
+
+	<xsd:complexType name="Factura">
+		<xsd:sequence>
+			<xsd:element name="numeroReferenciaFacturacion" type="xsd:string" />
+			<xsd:element name="uuid"                        type="xsd:string" />
+			<xsd:element name="serie"                       type="xsd:string" />
+			<xsd:element name="folio"                       type="xsd:string" />
+			<xsd:element name="rfcEmisor"                   type="xsd:string" />
+			<xsd:element name="rfcReceptor"                 type="xsd:string" />
+			<xsd:element name="fechaTimbrado"               type="xsd:string" /> <!-- YYYYMMDD -->
+			<xsd:element name="total"                       type="xsd:string" />
+			<xsd:element name="subTotal"                    type="xsd:string" />
+			<xsd:element name="iva"                         type="xsd:string" />
+			<!-- Campos extra -->
+			<xsd:element name="tipoDocumento"               type="xsd:string" />
+			<xsd:element name="estatusDocumento"                 type="xsd:string" />
+			<xsd:element name="metodoDePago"                type="xsd:string" nillable="true" minOccurs="0" />
+			<xsd:element name="moneda"                      type="xsd:string" nillable="true" minOccurs="0" />
+			<xsd:element name="tipoCambio"                  type="xsd:string" nillable="true" minOccurs="0" />
+			<xsd:element name="numeroTicket" 		type="xsd:string" nillable="true" minOccurs="0"/>
+			<!-- Campos opcionales -->
+			<xsd:element name="cfdiTimbrado"                type="xsd:string" nillable="true" minOccurs="0" /><!-- ZIP + BASE 64 -->
+			<xsd:element name="pdf"                         type="xsd:string" nillable="true" minOccurs="0" /><!-- ZIP + BASE 64 -->
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfFactura">
+		<xsd:sequence>
+			<xsd:element name="factura" type="tns:Factura" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+	<xsd:complexType name="Respuesta">
+		<xsd:sequence>
+			<xsd:element name="estatus"          type="xsd:short"/> <!-- 1=ok 0=error -->
+			<xsd:element name="descripcion"      type="xsd:string"/>
+			<xsd:element name="numeroReferenciaFacturacion" type="xsd:string"/>
+			<xsd:element name="uuid"             nillable="true" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="fechaTimbrado"    nillable="true" type="xsd:string" minOccurs="0"/> <!-- YYYYMMDD -->
+			<xsd:element name="rfcEmisor"        nillable="true" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="rfcReceptor"      nillable="true" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="serie"            nillable="true" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="folio"            nillable="true" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="total"            nillable="true" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="iva"              nillable="true" type="xsd:string" minOccurs="0"/>		
+			<xsd:element name="cfdiTimbrado"     nillable="true" type="xsd:string" minOccurs="0"/> <!-- ZIP + BASE 64 -->
+			<xsd:element name="pdf"              nillable="true" type="xsd:string" minOccurs="0"/> <!-- ZIP + BASE 64 -->
+			<xsd:element name="numeroPeticion"   nillable="true" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="RespuestaCancelacion">
+		<xsd:sequence>
+			<xsd:element name="estatus"        type="xsd:short"/>
+			<xsd:element name="descripcion"    type="xsd:string"/>
+			<xsd:element name="numeroReferenciaFacturacion" nillable="true" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="numeroPeticion" nillable="true" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="uuid"           nillable="true" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+	
+	
+
+
+
+</xsd:schema>
